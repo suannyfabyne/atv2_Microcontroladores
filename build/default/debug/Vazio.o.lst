@@ -1,4 +1,4 @@
-MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  11:20:23         PAGE  1
+MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  13:49:27         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -11,15 +11,15 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00005 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
                       00006 
                       00007 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00008 ;*                       NOME DO PROJETO                           *
-                      00009 ;*                           CLIENTE                               *
+                      00008 ;*                     SEMAFORO (ATIVIDADE2)                       *
+                      00009 ;*                 SUANNY FABYNE DA SILVA VIEIRA                   *
                       00010 ;*         DESENVOLVIDO PELA MOSAICO ENGENHARIA E CONSULTORIA      *
-                      00011 ;*   VERSÃO: 1.0                           DATA: 17/06/03          *
+                      00011 ;*   VERSÃO: 1.0                           DATA: 26/07/2018        *
                       00012 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
                       00013 ;*                     DESCRIÇÃO DO ARQUIVO                        *
                       00014 ;*-----------------------------------------------------------------*
                       00015 ;*   MODELO PARA O PIC 12F675                                      *
-                      00016 ;*                                                                 *
+                      00016 ;*   ATIVIDADE 2 DA DISCIPLINA DE MICROCONTROLADORES               *
                       00017 ;*                                                                 *
                       00018 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
                       00019 
@@ -57,7 +57,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00041                                         ;USUÁRIO
   00000020            00042                 W_TEMP          ;REGISTRADORES TEMPORÁRIOS PARA USO
   00000021            00043                 STATUS_TEMP     ;JUNTO ÀS INTERRUPÇÕES
-MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  11:20:23         PAGE  2
+MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  13:49:27         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -65,234 +65,251 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 
                       00044 
                       00045                 ;NOVAS VARIÁVEIS
-  00000022            00046                 VAR_PORT
-  00000023            00047                 CONT
-  00000024            00048                 AUX
-  00000025            00049                 VARDELAY1
-  00000026            00050                 VARDELAY2
-  00000027            00051                 VARDELAY3
-                      00052 
-                      00053         ENDC                    ;FIM DO BLOCO DE MEMÓRIA
+  00000022            00046                 CONT ;ESSE É O CONTADOR A SER EXIBIDO NO DISPLAY
+  00000023            00047                 AUX ;ESSA VARIAVEL É AUXILIAR DE CONT, ELA RECEBE O VALOR DE COUNT E REALIZA O SHIFT
+  00000024            00048                 VARDELAY1 ;VARIAVEL AUXILIAR PARA CONSTRUÇAO DO MEU DELAY
+  00000025            00049                 VARDELAY2 ;SEGUNDA VARIAVEL AUXILIAR PARA CONSTRUÇAO DO MEU DELAY
+                      00050 
+                      00051         ENDC                    ;FIM DO BLOCO DE MEMÓRIA
+                      00052 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00053 ;*                        FLAGS INTERNOS                           *
                       00054 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00055 ;*                        FLAGS INTERNOS                           *
-                      00056 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00057 ; DEFINIÇÃO DE TODOS OS FLAGS UTILIZADOS PELO SISTEMA
-                      00058 
+                      00055 ; DEFINIÇÃO DE TODOS OS FLAGS UTILIZADOS PELO SISTEMA
+                      00056 
+                      00057 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00058 ;*                         CONSTANTES                              *
                       00059 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00060 ;*                         CONSTANTES                              *
-                      00061 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00062 ; DEFINIÇÃO DE TODAS AS CONSTANTES UTILIZADAS PELO SISTEMA
-                      00063 
+                      00060 ; DEFINIÇÃO DE TODAS AS CONSTANTES UTILIZADAS PELO SISTEMA
+                      00061 
+                      00062 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00063 ;*                           ENTRADAS                              *
                       00064 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00065 ;*                           ENTRADAS                              *
-                      00066 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00067 ; DEFINIÇÃO DE TODOS OS PINOS QUE SERÃO UTILIZADOS COMO ENTRADA
-                      00068 ; RECOMENDAMOS TAMBÉM COMENTAR O SIGNIFICADO DE SEUS ESTADOS (0 E 1)
-                      00069 
+                      00065 ; DEFINIÇÃO DE TODOS OS PINOS QUE SERÃO UTILIZADOS COMO ENTRADA
+                      00066 ; RECOMENDAMOS TAMBÉM COMENTAR O SIGNIFICADO DE SEUS ESTADOS (0 E 1)
+                      00067 
+                      00068 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00069 ;*                           SAÍDAS                                *
                       00070 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00071 ;*                           SAÍDAS                                *
-                      00072 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00073 ; DEFINIÇÃO DE TODOS OS PINOS QUE SERÃO UTILIZADOS COMO SAÍDA
-                      00074 ; RECOMENDAMOS TAMBÉM COMENTAR O SIGNIFICADO DE SEUS ESTADOS (0 E 1)
-                      00075 
+                      00071 ; DEFINIÇÃO DE TODOS OS PINOS QUE SERÃO UTILIZADOS COMO SAÍDA
+                      00072 ; RECOMENDAMOS TAMBÉM COMENTAR O SIGNIFICADO DE SEUS ESTADOS (0 E 1)
+                      00073 
+                      00074 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00075 ;*                       VETOR DE RESET                            *
                       00076 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00077 ;*                       VETOR DE RESET                            *
-                      00078 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00079 
-0000                  00080         ORG     0x00                    ;ENDEREÇO INICIAL DE PROCESSAMENTO
-0000   280D           00081         GOTO    INICIO
-                      00082         
+                      00077 
+0000                  00078         ORG     0x00                    ;ENDEREÇO INICIAL DE PROCESSAMENTO
+0000   280D           00079         GOTO    INICIO
+                      00080         
+                      00081 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00082 ;*                    INÍCIO DA INTERRUPÇÃO                        *
                       00083 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00084 ;*                    INÍCIO DA INTERRUPÇÃO                        *
-                      00085 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00086 ; ENDEREÇO DE DESVIO DAS INTERRUPÇÕES. A PRIMEIRA TAREFA É SALVAR OS
-                      00087 ; VALORES DE "W" E "STATUS" PARA RECUPERAÇÃO FUTURA
-                      00088 
-0004                  00089         ORG     0x04                    ;ENDEREÇO INICIAL DA INTERRUPÇÃO
-0004   00A0           00090         MOVWF   W_TEMP          ;COPIA W PARA W_TEMP
-0005   0E03           00091         SWAPF   STATUS,W
-0006   00A1           00092         MOVWF   STATUS_TEMP     ;COPIA STATUS PARA STATUS_TEMP
-                      00093 
+                      00084 ; ENDEREÇO DE DESVIO DAS INTERRUPÇÕES. A PRIMEIRA TAREFA É SALVAR OS
+                      00085 ; VALORES DE "W" E "STATUS" PARA RECUPERAÇÃO FUTURA
+                      00086 
+0004                  00087         ORG     0x04                    ;ENDEREÇO INICIAL DA INTERRUPÇÃO
+0004   00A0           00088         MOVWF   W_TEMP          ;COPIA W PARA W_TEMP
+0005   0E03           00089         SWAPF   STATUS,W
+0006   00A1           00090         MOVWF   STATUS_TEMP     ;COPIA STATUS PARA STATUS_TEMP
+                      00091 
+                      00092 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00093 ;*                    ROTINA DE INTERRUPÇÃO                        *
                       00094 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00095 ;*                    ROTINA DE INTERRUPÇÃO                        *
-                      00096 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  11:20:23         PAGE  3
+                      00095 ; AQUI SERÁ ESCRITA AS ROTINAS DE RECONHECIMENTO E TRATAMENTO DAS
+                      00096 ; INTERRUPÇÕES
+MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  13:49:27         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00097 ; AQUI SERÁ ESCRITA AS ROTINAS DE RECONHECIMENTO E TRATAMENTO DAS
-                      00098 ; INTERRUPÇÕES
-                      00099 
+                      00097 
+                      00098 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00099 ;*                 ROTINA DE SAÍDA DA INTERRUPÇÃO                  *
                       00100 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00101 ;*                 ROTINA DE SAÍDA DA INTERRUPÇÃO                  *
-                      00102 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00103 ; OS VALORES DE "W" E "STATUS" DEVEM SER RECUPERADOS ANTES DE 
-                      00104 ; RETORNAR DA INTERRUPÇÃO
-                      00105 
-0007                  00106 SAI_INT
-0007   0E21           00107         SWAPF   STATUS_TEMP,W
-0008   0083           00108         MOVWF   STATUS          ;MOVE STATUS_TEMP PARA STATUS
-0009   0EA0           00109         SWAPF   W_TEMP,F
-000A   0E20           00110         SWAPF   W_TEMP,W        ;MOVE W_TEMP PARA W
-000B   0009           00111         RETFIE
-                      00112 
+                      00101 ; OS VALORES DE "W" E "STATUS" DEVEM SER RECUPERADOS ANTES DE 
+                      00102 ; RETORNAR DA INTERRUPÇÃO
+                      00103 
+0007                  00104 SAI_INT
+0007   0E21           00105         SWAPF   STATUS_TEMP,W
+0008   0083           00106         MOVWF   STATUS          ;MOVE STATUS_TEMP PARA STATUS
+0009   0EA0           00107         SWAPF   W_TEMP,F
+000A   0E20           00108         SWAPF   W_TEMP,W        ;MOVE W_TEMP PARA W
+000B   0009           00109         RETFIE
+                      00110 
+                      00111 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00112 ;*                       ROTINAS E SUBROTINAS                      *
                       00113 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00114 ;*                       ROTINAS E SUBROTINAS                      *
-                      00115 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00116 ; CADA ROTINA OU SUBROTINA DEVE POSSUIR A DESCRIÇÃO DE FUNCIONAMENTO
-                      00117 ; E UM NOME COERENTE ÀS SUAS FUNÇÕES.
-                      00118 
-000C                  00119 DESVIO
+                      00114 ; CADA ROTINA OU SUBROTINA DEVE POSSUIR A DESCRIÇÃO DE FUNCIONAMENTO
+                      00115 ; E UM NOME COERENTE ÀS SUAS FUNÇÕES.
+                      00116 
+000C                  00117 DESVIO
+                      00118         
+                      00119         
                       00120         
-                      00121         
-                      00122         
+                      00121 
+000C   0008           00122         RETURN
                       00123 
-000C   0008           00124         RETURN
-                      00125 
+                      00124 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00125 ;*                     INICIO DO PROGRAMA                          *
                       00126 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00127 ;*                     INICIO DO PROGRAMA                          *
-                      00128 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00129         
-000D                  00130 INICIO
-000D   1683           00131         BANK1                           ;ALTERA PARA O BANCO 1
-000E   3000           00132         MOVLW   B'00000000' ;CONFIGURA TODAS AS PORTAS DO GPIO (PINOS)
+                      00127         
+000D                  00128 INICIO
+000D   1683           00129         BANK1                           ;ALTERA PARA O BANCO 1
+000E   3000           00130         MOVLW   B'00000000' ;CONFIGURA TODAS AS PORTAS DO GPIO (PINOS)
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-000F   0085           00133         MOVWF   TRISIO          ;COMO SAÍDAS
+000F   0085           00131         MOVWF   TRISIO          ;COMO SAÍDAS
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0010   019F           00134         CLRF    ANSEL           ;DEFINE PORTAS COMO Digital I/O
-0011   3004           00135         MOVLW   B'00000100'
+0010   019F           00132         CLRF    ANSEL           ;DEFINE PORTAS COMO Digital I/O
+0011   3004           00133         MOVLW   B'00000100'
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0012   0081           00136         MOVWF   OPTION_REG      ;DEFINE OPÇÕES DE OPERAÇÃO
-0013   3000           00137         MOVLW   B'00000000'
-0014   008B           00138         MOVWF   INTCON          ;DEFINE OPÇÕES DE INTERRUPÇÕES
-0015   1283           00139         BANK0                           ;RETORNA PARA O BANCO
-0016   3007           00140         MOVLW   B'00000111'
-0017   0099           00141         MOVWF   CMCON           ;DEFINE O MODO DE OPERAÇÃO DO COMPARADOR ANALÓGICO
-                      00142 
+0012   0081           00134         MOVWF   OPTION_REG      ;DEFINE OPÇÕES DE OPERAÇÃO
+0013   3000           00135         MOVLW   B'00000000'
+0014   008B           00136         MOVWF   INTCON          ;DEFINE OPÇÕES DE INTERRUPÇÕES
+0015   1283           00137         BANK0                           ;RETORNA PARA O BANCO
+0016   3007           00138         MOVLW   B'00000111'
+0017   0099           00139         MOVWF   CMCON           ;DEFINE O MODO DE OPERAÇÃO DO COMPARADOR ANALÓGICO
+                      00140 
+                      00141 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00142 ;*                     INICIALIZAÇÃO DAS VARIÁVEIS                 *
                       00143 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00144 ;*                     INICIALIZAÇÃO DAS VARIÁVEIS                 *
-                      00145 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00146 
-MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  11:20:23         PAGE  4
+                      00144 
+                      00145 
+                      00146         
+MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  13:49:27         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00147 
-                      00148         
+                      00147 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00148 ;*                     ROTINA PRINCIPAL                            *
                       00149 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00150 ;*                     ROTINA PRINCIPAL                            *
-                      00151 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-0018                  00152 MAIN
-0018   300A           00153         MOVLW B'1010'
-0019   00A3           00154         MOVWF CONT
-001A   1005           00155         BCF GPIO, GP0
-001B                  00156 DECREMENTA 
-001B   30FF           00157         MOVLW .255
-001C   00A5           00158         MOVWF VARDELAY1
-001D   30EB           00159         MOVLW .235
-001E   00A6           00160         MOVWF VARDELAY2
-001F   284F           00161         GOTO DELAY
-0020                  00162 CABOUDELAY
-0020   03A3           00163         DECF CONT, F
-0021   0823           00164         MOVFW CONT
-0022   00A4           00165         MOVWF AUX
-0023   2835           00166         GOTO DISPLAY
-0024                  00167 JAMOSTREI
-0024   1D03           00168         BTFSS STATUS, Z
-0025   281B           00169         GOTO DECREMENTA
-0026   1405           00170         BSF GPIO, GP0
-0027   300A           00171         MOVLW B'1010'
-0028   00A3           00172         MOVWF CONT
-0029                  00173 DECREMENTA2
-0029   30FF           00174         MOVLW .255
-002A   00A5           00175         MOVWF VARDELAY1
-002B   30EB           00176         MOVLW .235
-002C   00A6           00177         MOVWF VARDELAY2
-002D   284F           00178         GOTO DELAY
-002E                  00179 CABOUDELAY2
-002E   03A3           00180         DECF CONT, F
-002F   0823           00181         MOVFW CONT
-0030   00A4           00182         MOVWF AUX
-0031   2835           00183         GOTO DISPLAY
-0032                  00184 JAMOSTREI2
-0032   1D03           00185         BTFSS STATUS, Z
-0033   2829           00186         GOTO DECREMENTA2
-0034   2818           00187         GOTO MAIN
-0035                  00188 DISPLAY
-0035   1C24           00189         BTFSS AUX, 0
-0036   2847           00190         GOTO ZERA1
-0037   1485           00191         BSF GPIO, GP1
-0038                  00192 VOLTA1
+0018                  00150 MAIN
+0018   300A           00151         MOVLW B'1010' ;INICIALIZANDO VARIAVEL COM 10, PARA SER DECREMENTADA E COLOCADA NOS DISPLAY COMO 
+                            9
+0019   00A2           00152         MOVWF CONT
+001A   1005           00153         BCF GPIO, GP0 ;MUDANDO INICIALMENTE O SINAL PARA 0
+001B                  00154 DECREMENTA ;AQUI ENTRA NO LAÇO DECREMENTO
+001B   30FF           00155         MOVLW .255
+001C   00A4           00156         MOVWF VARDELAY1 ;INICANDO UM CONTADOR COM VALOR MAXIMO, AFIM DE AJUSTAR MEU DELAY PARA 300MS
+001D   30EB           00157         MOVLW .235 
+001E   00A5           00158         MOVWF VARDELAY2 ;INICANDO UM CONTADOR COM VALOR TESTADO, AFIM DE AJUSTAR MEU DELAY PARA 300MS
+001F   284F           00159         GOTO DELAY ;APLICA O DELAY
+0020                  00160 CABOUDELAY ;QUANDO ACABA O DELAY, VOLTA PARA CÁ
+0020   03A2           00161         DECF CONT, F ;DECREMENTA O CONTADOR E COLOCA O VALOR EM F
+0021   0822           00162         MOVFW CONT 
+0022   00A3           00163         MOVWF AUX ;MOVE O VALOR DO W (QUE RECEBE O VALOR DE CONT) PARA UMA VARIAVEL AUXILIAR, AFIM DE OP
+                            ERAR NO DISPLAY 
+0023   2835           00164         GOTO DISPLAY ;VAI PARA DISPLAY
+0024                  00165 JAMOSTREI ;QUANDO EXIBIR O VALOR REQUERIDO NO DISPLAY, VOLTA PARA CÁ
+0024   1D03           00166         BTFSS STATUS, Z ;CHEGA SE O CONTADOR ESTÁ EM 0, SE SIM O Z É SETADO
+0025   281B           00167         GOTO DECREMENTA ;SE O CONTADOR AINDA FOR > 0, VOLTA PARA A LABEL DECREMENTA 
+0026   1405           00168         BSF GPIO, GP0 ;SE O CONTADOR CHEGAR EM 0, SETA O GP0, MUDANDO O ESTADO DO SINAL (DE VERMELHO VAI
+                             PARA VERDE)
+0027   300A           00169         MOVLW B'1010' 
+0028   00A2           00170         MOVWF CONT ;ENFIM SETADO O A PORTA QUE REPRESENTA O SINAL, REINICIA O CONTADOR 
+0029                  00171 DECREMENTA2 ;NAS PROXIMAS INSTRUÇOES, REPETE TODO O PROCESSO DE CONFIGURAR VARIAVEL DO DELAY, DECREMENTO
+                             E EXIBIÇÃO NO DISPLAY
+0029   30FF           00172         MOVLW .255 
+002A   00A4           00173         MOVWF VARDELAY1 ;PRECISAMOS REINICIAR O VALOR DO DELAY NOVAMENTE, PARA AGIR CORRETAMENTE, POIS E
+                            LE FOI DECREMENTADO
+002B   30EB           00174         MOVLW .235
+002C   00A5           00175         MOVWF VARDELAY2
+002D   284F           00176         GOTO DELAY
+002E                  00177 CABOUDELAY2 ;DEPOIS DO DELAY, VEM PARA CÁ
+002E   03A2           00178         DECF CONT, F ;DECREMENTA CONTADOR, COMO JA DITO ANTES, REPETINDO O PROCESSO 
+002F   0822           00179         MOVFW CONT
+0030   00A3           00180         MOVWF AUX
+0031   2835           00181         GOTO DISPLAY 
+0032                  00182 JAMOSTREI2
+0032   1D03           00183         BTFSS STATUS, Z ;CHECA SE O CONTADOR JÁ CHEGOU A 0
+0033   2829           00184         GOTO DECREMENTA2
+0034   2818           00185         GOTO MAIN ;VOLTA PARA O INICIO DO PROGRAMA, ONDE A PORTA QUE REPRESENTA O SEMAFORO SERÁ ZERADA E
+                             INICIA O PROCESSO NOVAMENTE
+0035                  00186 DISPLAY ;AQUI ENTRA NA PARTE DO DISPLAY
+0035   1C23           00187         BTFSS AUX, 0 ;É CHECADO O BIT MENOS SIGNIFICATIVO DA VARIAVEL AUX, QUE CONTEM O VALOR DO CONTADO
+                            R
+0036   2847           00188         GOTO ZERA1 ;SE O BIT MENOS SIGNIFICATIVO FOR 0, DESVIA
+0037   1485           00189         BSF GPIO, GP1 ;SE FOR 1, É SETADA A PORTA 1
+0038                  00190 VOLTA1
 Message[305]: Using default destination of 1 (file).
-0038   0CA4           00193         RRF AUX
-0039   1C24           00194         BTFSS AUX, 0
-003A   2849           00195         GOTO ZERA2
-003B   1505           00196         BSF GPIO, GP2
-003C                  00197 VOLTA2  
-Message[305]: Using default destination of 1 (file).
-MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  11:20:23         PAGE  5
+0038   0CA3           00191         RRF AUX ;AGORA, FAZEMOS UM SHIFT PARA DIREITA, AFIM DE OBTER O PROXIMO BIT MENOS SIGNICATIVO, E 
+MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  13:49:27         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-003C   0CA4           00198         RRF AUX
-003D   1C24           00199         BTFSS AUX, 0
-003E   284B           00200         GOTO ZERA4
-003F   1605           00201         BSF GPIO, GP4
-0040                  00202 VOLTA4  
+                            CHECA-LO
+0039   1C23           00192         BTFSS AUX, 0 ;CHECAMOS O PROXIMO BIT, DEPOIS DE FAZER O DESLOCAMENTO
+003A   2849           00193         GOTO ZERA2
+003B   1505           00194         BSF GPIO, GP2 ;SE 1, SETA
+003C                  00195 VOLTA2  
 Message[305]: Using default destination of 1 (file).
-0040   0CA4           00203         RRF AUX
-0041   1C24           00204         BTFSS AUX, 0
-0042   284D           00205         GOTO ZERA5
-0043   1685           00206         BSF GPIO, GP5
-0044                  00207 VOLTA5
-0044   1C05           00208         BTFSS GPIO, GP0
-0045   2824           00209         GOTO JAMOSTREI
-0046   2832           00210         GOTO JAMOSTREI2
-                      00211         
-0047                  00212 ZERA1
-0047   1085           00213         BCF GPIO, GP1
-0048   2838           00214         GOTO VOLTA1
-0049                  00215 ZERA2 
-0049   1105           00216         BCF GPIO, GP2
-004A   283C           00217         GOTO VOLTA2
-004B                  00218 ZERA4 
-004B   1205           00219         BCF GPIO, GP4
-004C   2840           00220         GOTO VOLTA4
-004D                  00221 ZERA5 
-004D   1285           00222         BCF GPIO, GP5
-004E   2844           00223         GOTO VOLTA5
-004F                  00224 DELAY
-004F   0000           00225         NOP
-0050   0000           00226         NOP
+003C   0CA3           00196         RRF AUX ;REPETE O MESMO PROCESSO DE DESLOCAMENTO E CHECA O BIT
+003D   1C23           00197         BTFSS AUX, 0
+003E   284B           00198         GOTO ZERA4
+003F   1605           00199         BSF GPIO, GP4
+0040                  00200 VOLTA4  
 Message[305]: Using default destination of 1 (file).
-0051   0BA5           00227         DECFSZ VARDELAY1
-0052   284F           00228         GOTO DELAY
+0040   0CA3           00201         RRF AUX ;REPETE O MESMO PROCESSO DE DESLOCAMENTO E CHECA O BIT
+0041   1C23           00202         BTFSS AUX, 0
+0042   284D           00203         GOTO ZERA5
+0043   1685           00204         BSF GPIO, GP5 ;SETA A ULTIMA PORTA
+0044                  00205 VOLTA5
+0044   1C05           00206         BTFSS GPIO, GP0 ;CONFERE SE O GP0 ESTÁ 0 OU 1, SE TIVER 0, VOLTA PARA UMA LABEL ESPECIFICA, SE N
+                            AO, VOLTA PARA OUTRA LABEL, ASSIM PARA FAZER O FLUXO CORRETAMENTE DO PROGRAMA
+0045   2824           00207         GOTO JAMOSTREI ;VOLTA PARA A LABEL DE QUANDO O GP0 ESTÁ 0
+0046   2832           00208         GOTO JAMOSTREI2 ;VOLTA PARA A LABEL DE QUANDO O GP0 ESTÁ 1
+                      00209         
+0047                  00210 ZERA1
+0047   1085           00211         BCF GPIO, GP1 ;MUDA O VALOR DA PORTA PARA 0
+0048   2838           00212         GOTO VOLTA1 ;VOLTA PARA A LABEL DISPLAY, PARA VOLTAR AO FLUXO NORMAL
+0049                  00213 ZERA2 
+0049   1105           00214         BCF GPIO, GP2 ;MUDA O VALOR DA PORTA PARA 0
+004A   283C           00215         GOTO VOLTA2 ;VOLTA PARA A LABEL DISPLAY, PARA VOLTAR AO FLUXO NORMAL
+004B                  00216 ZERA4 
+004B   1205           00217         BCF GPIO, GP4 ;MUDA O VALOR DA PORTA PARA 0
+004C   2840           00218         GOTO VOLTA4 ;VOLTA PARA A LABEL DISPLAY, PARA VOLTAR AO FLUXO NORMAL
+004D                  00219 ZERA5 
+004D   1285           00220         BCF GPIO, GP5 ;MUDA O VALOR DA PORTA PARA 0
+004E   2844           00221         GOTO VOLTA5 ;VOLTA PARA A LABEL DISPLAY, PARA VOLTAR AO FLUXO NORMAL
+004F                  00222 DELAY ;LABEL PARA CONSTRUÇAO DO DELAY: FUNCIONA COMO UM ANINHAMENTO DE LAÇOS
+004F   0000           00223         NOP ; É COLOCADO DOIS NOP PARA AJUSTAR O TEMPO (300MS) CORRETAMENTE
+0050   0000           00224         NOP
 Message[305]: Using default destination of 1 (file).
-0053   0BA6           00229         DECFSZ VARDELAY2
-0054   2858           00230         GOTO DELAY2
-0055   1C05           00231         BTFSS GPIO, GP0
-0056   2820           00232         GOTO CABOUDELAY
-0057   282E           00233         GOTO CABOUDELAY2
-0058                  00234 DELAY2
-0058   30FF           00235         MOVLW .255
-0059   00A5           00236         MOVWF VARDELAY1
-005A   284F           00237         GOTO DELAY
+0051   0BA4           00225         DECFSZ VARDELAY1 ;DECREMENTA A VARIAVEL QUE POSSUI O VALOR DE 255 (MAXIMO POSSIVEL) E CHECA SE F
+                            OR 0
+0052   284F           00226         GOTO DELAY ;SEMPRE QUE DECREMENTAR, VOLTA PRO DELAY, ONDE GASTA TEMPO COM OS NOP E DECREMENTANDO
+                             MAIS UMA VEZ O VARDELAY1 ATÉ QUE SEJA 0
+Message[305]: Using default destination of 1 (file).
+0053   0BA5           00227         DECFSZ VARDELAY2 ;DECREMENTA A VARIAVEL E CHECA SE FOR 0
+0054   2858           00228         GOTO DELAY2 ;VAI PARA O SEGUNDO LAÇO AUXLIAR DO DELAY ENQUANTO O VARDELAY2 FOR > 0
+0055   1C05           00229         BTFSS GPIO, GP0 ;TESTAMOS O VALOR DO GP0 PARA REDIRECIONAR PARA A LABEL CORRETA (DEPENDE SE FOR 
+                            0 OU 1) E MANTER O FLUXO DO PROGRAMA CORRETAMENTE
+0056   2820           00230         GOTO CABOUDELAY ;VAI PARA A LABEL DE QUANDO GP0 = 0
+0057   282E           00231         GOTO CABOUDELAY2 ;VAI PARA A LABEL DE QUANDO GP0 = 1
+0058                  00232 DELAY2
+0058   30FF           00233         MOVLW .255 ;COMO O VARDELAY FOI ZERADA ACIMA, INICIAMOS O VALOR DELA DE NOVO, PARA QUE SEJA INIC
+                            IADA E DECREMENTADA (VARDELAY2 = 235) VEZES, E FORME UMA REPETIÇAO
+0059   00A4           00234         MOVWF VARDELAY1 
+MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  13:49:27         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+005A   284F           00235         GOTO DELAY ;VOLTA PARA O INICIO DO DELAY
+                      00236         
+                      00237 
                       00238         
-                      00239 
-                      00240         
-                      00241         
+                      00239         
+                      00240 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00241 ;*                       FIM DO PROGRAMA                           *
                       00242 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00243 ;*                       FIM DO PROGRAMA                           *
-                      00244 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00245 
-                      00246         END
-MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  11:20:23         PAGE  6
+                      00243 
+                      00244         END
+MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  13:49:27         PAGE  7
 
 
 SYMBOL TABLE
@@ -313,7 +330,7 @@ ANS1                              00000001
 ANS2                              00000002
 ANS3                              00000003
 ANSEL                             0000009F
-AUX                               00000024
+AUX                               00000023
 BANK0                             BCF STATUS,RP0
 BANK1                             BSF STATUS,RP0
 C                                 00000000
@@ -335,7 +352,7 @@ CM2                               00000002
 CMCON                             00000019
 CMIE                              00000003
 CMIF                              00000003
-CONT                              00000023
+CONT                              00000022
 COUT                              00000006
 DC                                00000001
 DECREMENTA                        0000001B
@@ -351,7 +368,7 @@ EEDAT                             0000009A
 EEDATA                            0000009A
 EEIE                              00000007
 EEIF                              00000007
-MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  11:20:23         PAGE  7
+MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  13:49:27         PAGE  8
 
 
 SYMBOL TABLE
@@ -410,7 +427,7 @@ NOT_PD                            00000003
 NOT_POR                           00000001
 NOT_T1SYNC                        00000002
 NOT_TO                            00000004
-MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  11:20:23         PAGE  8
+MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  13:49:27         PAGE  9
 
 
 SYMBOL TABLE
@@ -462,21 +479,19 @@ TRISIO2                           00000002
 TRISIO3                           00000003
 TRISIO4                           00000004
 TRISIO5                           00000005
-VARDELAY1                         00000025
-VARDELAY2                         00000026
-VARDELAY3                         00000027
-VAR_PORT                          00000022
+VARDELAY1                         00000024
+VARDELAY2                         00000025
 VCFG                              00000006
 VOLTA1                            00000038
 VOLTA2                            0000003C
-MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  11:20:23         PAGE  9
+VOLTA4                            00000040
+VOLTA5                            00000044
+MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  13:49:27         PAGE 10
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-VOLTA4                            00000040
-VOLTA5                            00000044
 VR0                               00000000
 VR1                               00000001
 VR2                               00000002
@@ -528,14 +543,14 @@ _IDLOC2                           00002002
 _IDLOC3                           00002003
 _INTRC_OSC_CLKOUT                 00003FFD
 _INTRC_OSC_NOCLKOUT               00003FFC
-MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  11:20:23         PAGE 10
+_LP_OSC                           00003FF8
+_MCLRE_OFF                        00003FDF
+MPASM 5.77  /HOME/SUANNYFABYNE/MPLABXPROJECT   7-26-2018  13:49:27         PAGE 11
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-_LP_OSC                           00003FF8
-_MCLRE_OFF                        00003FDF
 _MCLRE_ON                         00003FFF
 _PWRTE_OFF                        00003FFF
 _PWRTE_ON                         00003FEF

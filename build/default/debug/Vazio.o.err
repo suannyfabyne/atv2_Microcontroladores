@@ -1,8 +1,8 @@
-Message[302] /home/suannyfabyne/MPLABXProjects/atividade2.X/Vazio.ASM 133 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/suannyfabyne/MPLABXProjects/atividade2.X/Vazio.ASM 131 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/suannyfabyne/MPLABXProjects/atividade2.X/Vazio.ASM 132 : Register in operand not in bank 0.  Ensure that bank bits are correct.
 Message[302] /home/suannyfabyne/MPLABXProjects/atividade2.X/Vazio.ASM 134 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] /home/suannyfabyne/MPLABXProjects/atividade2.X/Vazio.ASM 136 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[305] /home/suannyfabyne/MPLABXProjects/atividade2.X/Vazio.ASM 193 : Using default destination of 1 (file).
-Message[305] /home/suannyfabyne/MPLABXProjects/atividade2.X/Vazio.ASM 198 : Using default destination of 1 (file).
-Message[305] /home/suannyfabyne/MPLABXProjects/atividade2.X/Vazio.ASM 203 : Using default destination of 1 (file).
+Message[305] /home/suannyfabyne/MPLABXProjects/atividade2.X/Vazio.ASM 191 : Using default destination of 1 (file).
+Message[305] /home/suannyfabyne/MPLABXProjects/atividade2.X/Vazio.ASM 196 : Using default destination of 1 (file).
+Message[305] /home/suannyfabyne/MPLABXProjects/atividade2.X/Vazio.ASM 201 : Using default destination of 1 (file).
+Message[305] /home/suannyfabyne/MPLABXProjects/atividade2.X/Vazio.ASM 225 : Using default destination of 1 (file).
 Message[305] /home/suannyfabyne/MPLABXProjects/atividade2.X/Vazio.ASM 227 : Using default destination of 1 (file).
-Message[305] /home/suannyfabyne/MPLABXProjects/atividade2.X/Vazio.ASM 229 : Using default destination of 1 (file).
